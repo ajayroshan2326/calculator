@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neon Glass Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="calculator-card">
+        <form method="POST">
+            <input type="text" name="expression" value="{{ expression }}" readonly placeholder="0">
+
+            <div class="button-grid">
+                {% for row in [['7','8','9','/'],
+                               ['4','5','6','*'],
+                               ['1','2','3','-'],
+                               ['0','.','=','+'],
+                               ['C']] %}
+                    {% for btn in row %}
+                        <button type="submit" name="button" value="{{ btn }}"
+                            class="{% if btn in ['+','-','*','/'] %}operator{% elif btn == '=' %}equal{% elif btn == 'C' %}clear{% else %}btn{% endif %}">
+                            {{ btn }}
+                        </button>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </form>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
